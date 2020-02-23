@@ -1,0 +1,57 @@
+import com.synchronoss.mmp.drools.model.RCSMessage;
+import com.synchronoss.mmp.drools.model.Risk;
+import java.util.*;
+
+global com.synchronoss.mmp.drools.model.Risk riskScore;
+dialect  "mvel"
+
+rule "Calculate Message Risk - Scenario 1"
+    when
+        rCSMessageInstance:RCSMessage(isSenderBias == false && riskScore < 10);
+    then
+       	riskScore.setSenderBias(0);
+       	riskScore.setScore(70);
+end
+
+rule "Calculate Message Risk - Scenario 2"
+    when
+        rCSMessageInstance:RCSMessage(isSenderBias == true && riskScore < 10);
+    then
+       	riskScore.setSenderBias(30);
+       	riskScore.setScore(70);
+end
+
+
+rule "Calculate Message Risk - Scenario 3"
+    when
+        rCSMessageInstance:RCSMessage(isSenderBias == false && riskScore >= 10 && riskScore < 100);
+    then
+       	riskScore.setSenderBias(0);
+       	riskScore.setScore(70+(2*rCSMessageInstance.getRiskScore()));
+end
+
+
+rule "Calculate Message Risk - Scenario 4"
+    when
+        rCSMessageInstance:RCSMessage(isSenderBias == true && riskScore >= 10 && riskScore < 100);
+    then
+       	riskScore.setSenderBias(30+rCSMessageInstance.getRiskScore());
+       	riskScore.setScore(70+(2*rCSMessageInstance.getRiskScore()));
+end
+
+
+rule "Calculate Message Risk - Scenario 5"
+    when
+        rCSMessageInstance:RCSMessage(isSenderBias == false && riskScore >= 100);
+    then
+       	riskScore.setSenderBias(0);
+       	riskScore.setScore(70+(1.5*rCSMessageInstance.getRiskScore()));
+end
+
+rule "Calculate Message Risk - Scenario 6"
+    when
+        rCSMessageInstance:RCSMessage(isSenderBias == true && riskScore >= 100);
+    then
+       	riskScore.setSenderBias(30+rCSMessageInstance.getRiskScore());
+       	riskScore.setScore(70+(1.5*rCSMessageInstance.getRiskScore()));
+end

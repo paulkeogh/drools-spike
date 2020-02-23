@@ -1,24 +1,24 @@
 package com.synchronoss.mmp.drools.app;
 
-import com.synchronoss.mmp.drools.model.Fare;
-import com.synchronoss.mmp.drools.model.TaxiRide;
-import com.synchronoss.mmp.drools.service.TaxiFareCalculatorService;
-import com.synchronoss.mmp.drools.service.TaxiFareConfiguration;
+import com.synchronoss.mmp.drools.model.Risk;
+import com.synchronoss.mmp.drools.model.RCSMessage;
+import com.synchronoss.mmp.drools.service.MessageScoreCalculatorService;
+import com.synchronoss.mmp.drools.service.MessageScoreConfiguration;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class ApplicationRunner {
 
     public static void main(String[] args) {
-        ApplicationContext context = new AnnotationConfigApplicationContext(TaxiFareConfiguration.class);
-        TaxiFareCalculatorService taxiFareCalculatorService = (TaxiFareCalculatorService) context.getBean(TaxiFareCalculatorService.class);
+        ApplicationContext context = new AnnotationConfigApplicationContext(MessageScoreConfiguration.class);
+        MessageScoreCalculatorService messageScoreCalculatorService = (MessageScoreCalculatorService) context.getBean(MessageScoreCalculatorService.class);
 
-        TaxiRide taxiRide = new TaxiRide();
-        taxiRide.setIsNightSurcharge(true);
-        taxiRide.setDistanceInMile(190L);
-        Fare rideFare = new Fare();
+        RCSMessage taxiRide = new RCSMessage();
+        taxiRide.setIsSenderBias(true);
+        taxiRide.setRiskScore(190L);
+        Risk rideFare = new Risk();
 
-        taxiFareCalculatorService.calculateFare(taxiRide, rideFare);
+        messageScoreCalculatorService.calculateRisk(taxiRide, rideFare);
     }
 
 }

@@ -13,8 +13,8 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @ComponentScan("com.synchronoss.mmp.drools.service")
-public class TaxiFareConfiguration {
-    @Value("${drools.file:TAXI_FARE_RULE.drl}")
+public class MessageScoreConfiguration {
+    @Value("${drools.file:risk_rules.drl}")
     private final String drlFile = null;
 
     @Bean
