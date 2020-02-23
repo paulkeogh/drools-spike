@@ -8,17 +8,16 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class ApplicationRunner {
-
     public static void main(String[] args) {
         ApplicationContext context = new AnnotationConfigApplicationContext(MessageScoreConfiguration.class);
         MessageScoreCalculatorService messageScoreCalculatorService = (MessageScoreCalculatorService) context.getBean(MessageScoreCalculatorService.class);
 
-        RCSMessage taxiRide = new RCSMessage();
-        taxiRide.setIsSenderBias(true);
-        taxiRide.setRiskScore(190L);
+        RCSMessage rcsMessage = new RCSMessage();
+        rcsMessage.setIsSenderBias(true);
+        rcsMessage.setRiskScore(190L);
         Risk rideFare = new Risk();
 
-        messageScoreCalculatorService.calculateRisk(taxiRide, rideFare);
+        messageScoreCalculatorService.calculateRisk(rcsMessage, rideFare);
     }
 
 }

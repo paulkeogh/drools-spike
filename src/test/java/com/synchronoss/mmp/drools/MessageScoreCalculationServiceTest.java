@@ -18,80 +18,78 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @ContextConfiguration(classes = MessageScoreConfiguration.class)
 @TestPropertySource("/application-test.properties")
 public class MessageScoreCalculationServiceTest {
-
     @Autowired
     private MessageScoreCalculatorService messageScoreCalculatorService;
 
     @Test
-    public void whenNightSurchargeFalseAndDistanceLessThan10_thenFixFareWithoutNightSurcharge() {
-        RCSMessage taxiRide = new RCSMessage();
-        taxiRide.setIsSenderBias(false);
-        taxiRide.setRiskScore(9L);
-        Risk rideFare = new Risk();
-        Long totalCharge = messageScoreCalculatorService.calculateRisk(taxiRide, rideFare);
+    public void test1() {
+        RCSMessage rcsMessage = new RCSMessage();
+        rcsMessage.setIsSenderBias(false);
+        rcsMessage.setRiskScore(9L);
+        Risk riskScore = new Risk();
+        Long totalScore = messageScoreCalculatorService.calculateRisk(rcsMessage, riskScore);
 
-        assertNotNull(totalCharge);
-        assertEquals(Long.valueOf(70), totalCharge);
+        assertNotNull(totalScore);
+        assertEquals(Long.valueOf(70), totalScore);
     }
 
     @Test
-    public void whenNightSurchargeTrueAndDistanceLessThan10_thenFixFareWithNightSurcharge() {
-        RCSMessage taxiRide = new RCSMessage();
-        taxiRide.setIsSenderBias(true);
-        taxiRide.setRiskScore(5L);
-        Risk rideFare = new Risk();
-        Long totalCharge = messageScoreCalculatorService.calculateRisk(taxiRide, rideFare);
+    public void test2() {
+        RCSMessage rcsMessage = new RCSMessage();
+        rcsMessage.setIsSenderBias(true);
+        rcsMessage.setRiskScore(5L);
+        Risk riskScore = new Risk();
+        Long totalScore = messageScoreCalculatorService.calculateRisk(rcsMessage, riskScore);
 
-        assertNotNull(totalCharge);
-        assertEquals(Long.valueOf(100), totalCharge);
+        assertNotNull(totalScore);
+        assertEquals(Long.valueOf(100), totalScore);
     }
 
     @Test
-    public void whenNightSurchargeFalseAndDistanceLessThan100_thenDoubleFareWithoutNightSurcharge() {
-        RCSMessage taxiRide = new RCSMessage();
-        taxiRide.setIsSenderBias(false);
-        taxiRide.setRiskScore(50L);
-        Risk rideFare = new Risk();
-        Long totalCharge = messageScoreCalculatorService.calculateRisk(taxiRide, rideFare);
+    public void test3() {
+        RCSMessage rcsMessage = new RCSMessage();
+        rcsMessage.setIsSenderBias(false);
+        rcsMessage.setRiskScore(50L);
+        Risk riskScore = new Risk();
+        Long totalScore = messageScoreCalculatorService.calculateRisk(rcsMessage, riskScore);
 
-        assertNotNull(totalCharge);
-        assertEquals(Long.valueOf(170), totalCharge);
+        assertNotNull(totalScore);
+        assertEquals(Long.valueOf(170), totalScore);
     }
 
     @Test
-    public void whenNightSurchargeTrueAndDistanceLessThan100_thenDoubleFareWithNightSurcharge() {
-        RCSMessage taxiRide = new RCSMessage();
-        taxiRide.setIsSenderBias(true);
-        taxiRide.setRiskScore(50L);
-        Risk rideFare = new Risk();
-        Long totalCharge = messageScoreCalculatorService.calculateRisk(taxiRide, rideFare);
+    public void test4() {
+        RCSMessage rcsMessage = new RCSMessage();
+        rcsMessage.setIsSenderBias(true);
+        rcsMessage.setRiskScore(50L);
+        Risk riskScore = new Risk();
+        Long totalScore = messageScoreCalculatorService.calculateRisk(rcsMessage, riskScore);
 
-        assertNotNull(totalCharge);
-        assertEquals(Long.valueOf(250), totalCharge);
+        assertNotNull(totalScore);
+        assertEquals(Long.valueOf(250), totalScore);
     }
 
     @Test
-    public void whenNightSurchargeFalseAndDistanceGreaterThan100_thenExtraPercentFareWithoutNightSurcharge() {
-        RCSMessage taxiRide = new RCSMessage();
-        taxiRide.setIsSenderBias(false);
-        taxiRide.setRiskScore(100L);
-        Risk rideFare = new Risk();
-        Long totalCharge = messageScoreCalculatorService.calculateRisk(taxiRide, rideFare);
+    public void test5() {
+        RCSMessage rcsMessage = new RCSMessage();
+        rcsMessage.setIsSenderBias(false);
+        rcsMessage.setRiskScore(100L);
+        Risk riskScore = new Risk();
+        Long totalScore = messageScoreCalculatorService.calculateRisk(rcsMessage, riskScore);
 
-        assertNotNull(totalCharge);
-        assertEquals(Long.valueOf(220), totalCharge);
+        assertNotNull(totalScore);
+        assertEquals(Long.valueOf(220), totalScore);
     }
 
     @Test
-    public void whenNightSurchargeTrueAndDistanceGreaterThan100_thenExtraPercentFareWithNightSurcharge() {
-        RCSMessage taxiRide = new RCSMessage();
-        taxiRide.setIsSenderBias(true);
-        taxiRide.setRiskScore(100L);
-        Risk rideFare = new Risk();
-        Long totalCharge = messageScoreCalculatorService.calculateRisk(taxiRide, rideFare);
+    public void test6() {
+        RCSMessage rcsMessage = new RCSMessage();
+        rcsMessage.setIsSenderBias(true);
+        rcsMessage.setRiskScore(100L);
+        Risk riskScore = new Risk();
+        Long totalScore = messageScoreCalculatorService.calculateRisk(rcsMessage, riskScore);
 
-        assertNotNull(totalCharge);
-        assertEquals(Long.valueOf(350), totalCharge);
+        assertNotNull(totalScore);
+        assertEquals(Long.valueOf(350), totalScore);
     }
-
 }
