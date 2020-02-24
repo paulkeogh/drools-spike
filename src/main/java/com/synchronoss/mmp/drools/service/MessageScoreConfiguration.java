@@ -11,20 +11,25 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 @Configuration
 @ComponentScan("com.synchronoss.mmp.drools.service")
 public class MessageScoreConfiguration {
-    @Value("${drools.file:risk_rules.drl}")
-    private final String drlFile = null;
+    @Value("${drools.folder:c:/tmp}")
+    private final String drlFolder = null;
 
     @Bean
-    public KieContainer kieContainer() {
+    public KieContainer kieContainer() throws IOException {
         KieServices kieServices = KieServices.Factory.get();
-
         KieFileSystem kieFileSystem = kieServices.newKieFileSystem();
-        //kieFileSystem.write(ResourceFactory.newClassPathResource(drlFile));
 
-        kieFileSystem.write(ResourceFactory.newFileResource(drlFile));
+        Files.newDirectoryStream(Paths.get(drlFolder),
+                path -> path.toString().endsWith(".drl"))
+                .forEach(file -> kieFileSystem.write(ResourceFactory.newFileResource(file.toFile())));
+
         KieBuilder kieBuilder = kieServices.newKieBuilder(kieFileSystem);
         kieBuilder.buildAll();
         KieModule kieModule = kieBuilder.getKieModule();
